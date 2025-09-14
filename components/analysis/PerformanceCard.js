@@ -38,22 +38,8 @@ export const PerformanceCard = ({ gameData }) => {
         label="Ties" 
         value={ties} 
         color="#007AFF"
+        isLast={true}
       />
-      <View style={{
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        paddingTop: 12
-      }}>
-        <Text style={{ fontSize: 17, color: '#1C1C1E' }}>Win Rate</Text>
-        <Text style={{ 
-          fontSize: 17, 
-          fontWeight: '700', 
-          color: '#007AFF' 
-        }}>
-          {gameData.length > 0 ? Math.round((wins / gameData.length) * 100) : 0}%
-        </Text>
-      </View>
     </View>
   );
 };
