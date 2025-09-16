@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { getOutcome } from '../utils/gameUtils';
+import { storage } from '../utils/storage';
 
 export const useGameLogic = () => {
   const [activeTab, setActiveTab] = useState('game');
@@ -12,7 +13,34 @@ export const useGameLogic = () => {
   const [lastGameResult, setLastGameResult] = useState(null);
   const [showingResult, setShowingResult] = useState(false);
 
-  const playRound = () => {
+  useEffect(() => {
+    const loadPersistedData = async () => {
+      try {
+        const [
+          savedGameData,
+          savedRoundCount,
+          savedCurrentStreak,
+          savedBestStreak
+        ] = await Promise.all([
+          storage.loadGameData(),
+          storage.loadRoundCount(),
+          storage.loadCurrentWinStreak(),
+          storage.loadBestWinStreak()
+        ]);
+
+        setGameData(savedGameData);
+        setRoundCount(savedRoundCount);
+        setCurrentWinStreak(savedCurrentStreak);
+        setBestWinStreak(savedBestStreak);
+      } catch (error) {
+        console.error('Failed to load persisted data:', error);
+      }
+    };
+
+    loadPersistedData();
+  }, []);
+
+  const playRound = async () => {
     if (!selectedHim || !selectedYou || showingResult) return;
 
     const outcome = getOutcome(selectedYou, selectedHim);
@@ -25,20 +53,40 @@ export const useGameLogic = () => {
       timestamp: new Date().toISOString()
     };
 
-    setGameData(prev => [...prev, newGame]);
-    setRoundCount(prev => prev + 1);
+    const updatedGameData = [...gameData, newGame];
+    const updatedRoundCount = roundCount + 1;
+
+    setGameData(updatedGameData);
+    setRoundCount(updatedRoundCount);
 
     // Update win streak logic
+    let updatedCurrentStreak = currentWinStreak;
+    let updatedBestStreak = bestWinStreak;
+
     if (outcome === 'win') {
-      const newStreak = currentWinStreak + 1;
-      setCurrentWinStreak(newStreak);
-      if (newStreak > bestWinStreak) {
-        setBestWinStreak(newStreak);
+      updatedCurrentStreak = currentWinStreak + 1;
+      setCurrentWinStreak(updatedCurrentStreak);
+      if (updatedCurrentStreak > bestWinStreak) {
+        updatedBestStreak = updatedCurrentStreak;
+        setBestWinStreak(updatedBestStreak);
       }
     } else if (outcome === 'lose') {
+      updatedCurrentStreak = 0;
       setCurrentWinStreak(0);
     }
     // Note: ties don't break the streak but don't extend it either
+
+    // Persist data to AsyncStorage
+    try {
+      await Promise.all([
+        storage.saveGameData(updatedGameData),
+        storage.saveRoundCount(updatedRoundCount),
+        storage.saveCurrentWinStreak(updatedCurrentStreak),
+        storage.saveBestWinStreak(updatedBestStreak)
+      ]);
+    } catch (error) {
+      console.error('Failed to save game data:', error);
+    }
 
     // Store the result and show it briefly before resetting
     setLastGameResult(newGame);
@@ -53,13 +101,20 @@ export const useGameLogic = () => {
     }, 2000);
   };
 
-  const clearHistory = () => {
+  const clearHistory = async () => {
     setGameData([]);
     setRoundCount(1);
     setCurrentWinStreak(0);
     setBestWinStreak(0);
     setLastGameResult(null);
     setShowingResult(false);
+
+    // Clear AsyncStorage
+    try {
+      await storage.clearAllData();
+    } catch (error) {
+      console.error('Failed to clear persisted data:', error);
+    }
   };
 
   return {

@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import { storage } from '../utils/storage';
 
 const ThemeContext = createContext();
 
@@ -44,13 +45,33 @@ export const darkTheme = {
 
 export const ThemeProvider = ({ children }) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
-  
+
+  useEffect(() => {
+    const loadThemePreference = async () => {
+      try {
+        const savedThemePreference = await storage.loadThemePreference();
+        setIsDarkMode(savedThemePreference);
+      } catch (error) {
+        console.error('Failed to load theme preference:', error);
+      }
+    };
+
+    loadThemePreference();
+  }, []);
+
   const theme = isDarkMode ? darkTheme : lightTheme;
-  
-  const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode);
+
+  const toggleTheme = async () => {
+    const newThemeMode = !isDarkMode;
+    setIsDarkMode(newThemeMode);
+
+    try {
+      await storage.saveThemePreference(newThemeMode);
+    } catch (error) {
+      console.error('Failed to save theme preference:', error);
+    }
   };
-  
+
   return (
     <ThemeContext.Provider value={{ theme, isDarkMode, toggleTheme }}>
       {children}
