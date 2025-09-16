@@ -7,15 +7,17 @@ import { PlayButton } from './PlayButton';
 import { WinStreakCard } from './WinStreakCard';
 import { useTheme } from '../../contexts/ThemeContext';
 
-export const GameScreen = ({ 
-  selectedHim, 
-  setSelectedHim, 
-  selectedYou, 
-  setSelectedYou, 
-  roundCount, 
+export const GameScreen = ({
+  selectedHim,
+  setSelectedHim,
+  selectedYou,
+  setSelectedYou,
+  roundCount,
   currentWinStreak,
   bestWinStreak,
-  playRound 
+  lastGameResult,
+  showingResult,
+  playRound
 }) => {
   const { theme } = useTheme();
   
@@ -34,10 +36,12 @@ export const GameScreen = ({
           setSelectedYou={setSelectedYou} 
         />
         
-        <PlayButton 
-          selectedHim={selectedHim} 
-          selectedYou={selectedYou} 
-          playRound={playRound} 
+        <PlayButton
+          selectedHim={selectedHim}
+          selectedYou={selectedYou}
+          playRound={playRound}
+          showingResult={showingResult}
+          lastGameResult={lastGameResult}
         />
         
         <WinStreakCard 

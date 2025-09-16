@@ -22,15 +22,17 @@ const PaperTrailContent = () => {
     roundCount,
     currentWinStreak,
     bestWinStreak,
+    lastGameResult,
+    showingResult,
     playRound,
     clearHistory
   } = gameLogic;
 
   const renderScreen = () => {
     switch (activeTab) {
-      case 'game': 
+      case 'game':
         return (
-          <GameScreen 
+          <GameScreen
             selectedHim={selectedHim}
             setSelectedHim={setSelectedHim}
             selectedYou={selectedYou}
@@ -38,6 +40,8 @@ const PaperTrailContent = () => {
             roundCount={roundCount}
             currentWinStreak={currentWinStreak}
             bestWinStreak={bestWinStreak}
+            lastGameResult={lastGameResult}
+            showingResult={showingResult}
             playRound={playRound}
           />
         );
@@ -50,9 +54,9 @@ const PaperTrailContent = () => {
         );
       case 'simulator': 
         return <SimulatorScreen />;
-      default: 
+      default:
         return (
-          <GameScreen 
+          <GameScreen
             selectedHim={selectedHim}
             setSelectedHim={setSelectedHim}
             selectedYou={selectedYou}
@@ -60,6 +64,8 @@ const PaperTrailContent = () => {
             roundCount={roundCount}
             currentWinStreak={currentWinStreak}
             bestWinStreak={bestWinStreak}
+            lastGameResult={lastGameResult}
+            showingResult={showingResult}
             playRound={playRound}
           />
         );
