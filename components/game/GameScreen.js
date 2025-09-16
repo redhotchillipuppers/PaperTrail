@@ -5,6 +5,7 @@ import { OpponentCard } from './OpponentCard';
 import { PlayerCard } from './PlayerCard';
 import { PlayButton } from './PlayButton';
 import { WinStreakCard } from './WinStreakCard';
+import { useTheme } from '../../contexts/ThemeContext';
 
 export const GameScreen = ({ 
   selectedHim, 
@@ -15,33 +16,35 @@ export const GameScreen = ({
   currentWinStreak,
   bestWinStreak,
   playRound 
-}) => (
-  <ScrollView style={{ flex: 1, backgroundColor: '#F2F2F7' }}>
-    <View style={{ padding: 16 }}>
-      <Header title="Paper Trail" subtitle={`Round ${roundCount}`} />
-      
-      <OpponentCard 
-        selectedHim={selectedHim} 
-        setSelectedHim={setSelectedHim} 
-      />
-      
-      <PlayerCard 
-        selectedYou={selectedYou} 
-        setSelectedYou={setSelectedYou} 
-      />
-      
-      <PlayButton 
-        selectedHim={selectedHim} 
-        selectedYou={selectedYou} 
-        playRound={playRound} 
-      />
-      
-      <WinStreakCard 
-        currentStreak={currentWinStreak}
-        bestStreak={bestWinStreak}
-      />
-    </View>
-  </ScrollView>
-);
-
-export default GameScreen;
+}) => {
+  const { theme } = useTheme();
+  
+  return (
+    <ScrollView style={{ flex: 1, backgroundColor: theme.background }}>
+      <View style={{ padding: 16 }}>
+        <Header title="Paper Trail" subtitle={`Round ${roundCount}`} />
+        
+        <OpponentCard 
+          selectedHim={selectedHim} 
+          setSelectedHim={setSelectedHim} 
+        />
+        
+        <PlayerCard 
+          selectedYou={selectedYou} 
+          setSelectedYou={setSelectedYou} 
+        />
+        
+        <PlayButton 
+          selectedHim={selectedHim} 
+          selectedYou={selectedYou} 
+          playRound={playRound} 
+        />
+        
+        <WinStreakCard 
+          currentStreak={currentWinStreak}
+          bestStreak={bestWinStreak}
+        />
+      </View>
+    </ScrollView>
+  );
+};

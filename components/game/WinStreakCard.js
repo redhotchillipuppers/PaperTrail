@@ -1,15 +1,18 @@
 import React from 'react';
 import { View, Text } from 'react-native';
+import { useTheme } from '../../contexts/ThemeContext';
 
 export const WinStreakCard = ({ currentStreak, bestStreak }) => {
+  const { theme } = useTheme();
+  
   return (
     <View style={{
-      backgroundColor: '#FFFFFF',
+      backgroundColor: theme.cardBackground,
       borderRadius: 12,
       padding: 16,
       marginTop: 16,
       borderWidth: 1,
-      borderColor: '#E5E5EA',
+      borderColor: theme.cardBorder,
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center'
@@ -17,7 +20,7 @@ export const WinStreakCard = ({ currentStreak, bestStreak }) => {
       <View style={{ flex: 1, alignItems: 'center' }}>
         <Text style={{
           fontSize: 13,
-          color: '#8E8E93',
+          color: theme.secondaryText,
           fontWeight: '500',
           marginBottom: 4
         }}>
@@ -26,7 +29,7 @@ export const WinStreakCard = ({ currentStreak, bestStreak }) => {
         <Text style={{
           fontSize: 24,
           fontWeight: '700',
-          color: currentStreak > 0 ? '#007AFF' : '#8E8E93'
+          color: currentStreak > 0 ? theme.accent : theme.secondaryText
         }}>
           {currentStreak}
         </Text>
@@ -35,13 +38,13 @@ export const WinStreakCard = ({ currentStreak, bestStreak }) => {
       <View style={{
         width: 1,
         height: 40,
-        backgroundColor: '#F2F2F7'
+        backgroundColor: theme.separator
       }} />
       
       <View style={{ flex: 1, alignItems: 'center' }}>
         <Text style={{
           fontSize: 13,
-          color: '#8E8E93',
+          color: theme.secondaryText,
           fontWeight: '500',
           marginBottom: 4
         }}>
@@ -50,7 +53,7 @@ export const WinStreakCard = ({ currentStreak, bestStreak }) => {
         <Text style={{
           fontSize: 24,
           fontWeight: '700',
-          color: bestStreak > 0 ? '#007AFF' : '#8E8E93'
+          color: bestStreak > 0 ? theme.accent : theme.secondaryText
         }}>
           {bestStreak}
         </Text>
@@ -58,5 +61,3 @@ export const WinStreakCard = ({ currentStreak, bestStreak }) => {
     </View>
   );
 };
-
-export default WinStreakCard;

@@ -1,7 +1,9 @@
 import React from 'react';
 import { View, Text } from 'react-native';
+import { useTheme } from '../../contexts/ThemeContext';
 
 export const WinRateCard = ({ gameData }) => {
+  const { theme } = useTheme();
   const wins = gameData.filter(g => g.outcome === 'win').length;
   const winRate = gameData.length > 0 ? Math.round((wins / gameData.length) * 100) : 0;
   
@@ -20,17 +22,17 @@ export const WinRateCard = ({ gameData }) => {
 
   return (
     <View style={{
-      backgroundColor: '#FFFFFF',
+      backgroundColor: theme.cardBackground,
       borderRadius: 12,
       padding: 20,
       marginBottom: 12,
       borderWidth: 1,
-      borderColor: '#E5E5EA'
+      borderColor: theme.cardBorder
     }}>
       <Text style={{
         fontSize: 17,
         fontWeight: '600',
-        color: '#1C1C1E',
+        color: theme.primaryText,
         textAlign: 'center',
         marginBottom: 20
       }}>
@@ -42,7 +44,7 @@ export const WinRateCard = ({ gameData }) => {
         <View style={{
           width: '100%',
           height: 8,
-          backgroundColor: '#F2F2F7',
+          backgroundColor: theme.separator,
           borderRadius: 4,
           marginBottom: 16,
           overflow: 'hidden'
@@ -74,12 +76,12 @@ export const WinRateCard = ({ gameData }) => {
             left: `${winRate}%`,
             width: 12,
             height: 12,
-            backgroundColor: '#FFFFFF',
+            backgroundColor: theme.cardBackground,
             borderRadius: 6,
             borderWidth: 2,
             borderColor: getSliderColor(winRate),
             marginLeft: -6,
-            shadowColor: '#000',
+            shadowColor: theme.shadow,
             shadowOffset: { width: 0, height: 2 },
             shadowOpacity: 0.1,
             shadowRadius: 4,
@@ -91,7 +93,7 @@ export const WinRateCard = ({ gameData }) => {
         <Text style={{
           fontSize: 24,
           fontWeight: '700',
-          color: '#007AFF'
+          color: theme.accent
         }}>
           {winRate}%
         </Text>
@@ -99,5 +101,3 @@ export const WinRateCard = ({ gameData }) => {
     </View>
   );
 };
-
-export default WinRateCard;

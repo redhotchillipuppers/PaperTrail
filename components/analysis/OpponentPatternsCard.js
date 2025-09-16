@@ -1,8 +1,10 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import { choices } from '../../utils/gameUtils';
+import { useTheme } from '../../contexts/ThemeContext';
 
 export const OpponentPatternsCard = ({ gameData }) => {
+  const { theme } = useTheme();
   const friendChoices = gameData.reduce((acc, game) => {
     acc[game.friendChoice] = (acc[game.friendChoice] || 0) + 1;
     return acc;
@@ -10,17 +12,17 @@ export const OpponentPatternsCard = ({ gameData }) => {
 
   return (
     <View style={{
-      backgroundColor: '#FFFFFF',
+      backgroundColor: theme.cardBackground,
       borderRadius: 12,
       padding: 20,
       marginBottom: 12,
       borderWidth: 1,
-      borderColor: '#E5E5EA'
+      borderColor: theme.cardBorder
     }}>
       <Text style={{
         fontSize: 17,
         fontWeight: '600',
-        color: '#1C1C1E',
+        color: theme.primaryText,
         marginBottom: 16
       }}>
         Opponent Patterns
@@ -42,7 +44,7 @@ export const OpponentPatternsCard = ({ gameData }) => {
             }}>
               <Text style={{ 
                 fontSize: 17, 
-                color: '#1C1C1E',
+                color: theme.primaryText,
                 textTransform: 'capitalize'
               }}>
                 {choiceEmoji} {choice}
@@ -51,7 +53,7 @@ export const OpponentPatternsCard = ({ gameData }) => {
                 <View style={{
                   width: 60,
                   height: 6,
-                  backgroundColor: '#F2F2F7',
+                  backgroundColor: theme.separator,
                   borderRadius: 3,
                   marginRight: 12,
                   overflow: 'hidden'
@@ -59,12 +61,12 @@ export const OpponentPatternsCard = ({ gameData }) => {
                   <View style={{
                     width: `${percentage}%`,
                     height: '100%',
-                    backgroundColor: '#007AFF'
+                    backgroundColor: theme.accent
                   }} />
                 </View>
                 <Text style={{ 
                   fontSize: 15, 
-                  color: '#8E8E93',
+                  color: theme.secondaryText,
                   minWidth: 35,
                   textAlign: 'right'
                 }}>
@@ -72,12 +74,10 @@ export const OpponentPatternsCard = ({ gameData }) => {
                 </Text>
               </View>
             </View>
-            {!isLast && <View style={{ height: 1, backgroundColor: '#F2F2F7' }} />}
+            {!isLast && <View style={{ height: 1, backgroundColor: theme.separator }} />}
           </View>
         );
       })}
     </View>
   );
 };
-
-export default OpponentPatternsCard;
