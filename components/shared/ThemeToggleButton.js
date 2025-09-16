@@ -10,7 +10,7 @@ export const ThemeToggleButton = () => {
       onPress={toggleTheme}
       style={{
         position: 'absolute',
-        top: 50,
+        top: 20, // Moved higher up
         right: 16,
         width: 44,
         height: 44,
@@ -24,7 +24,8 @@ export const ThemeToggleButton = () => {
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
         shadowRadius: 4,
-        elevation: 3
+        elevation: 8, // Increased elevation for better layering
+        zIndex: 1000 // High z-index to ensure it stays on top
       }}
     >
       <Text style={{ fontSize: 20 }}>
