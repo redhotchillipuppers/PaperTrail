@@ -18,6 +18,8 @@ const PaperTrail = () => {
     setSelectedYou,
     gameData,
     roundCount,
+    currentWinStreak,
+    bestWinStreak,
     playRound,
     clearHistory
   } = gameLogic;
@@ -32,6 +34,8 @@ const PaperTrail = () => {
             selectedYou={selectedYou}
             setSelectedYou={setSelectedYou}
             roundCount={roundCount}
+            currentWinStreak={currentWinStreak}
+            bestWinStreak={bestWinStreak}
             playRound={playRound}
           />
         );
@@ -52,6 +56,8 @@ const PaperTrail = () => {
             selectedYou={selectedYou}
             setSelectedYou={setSelectedYou}
             roundCount={roundCount}
+            currentWinStreak={currentWinStreak}
+            bestWinStreak={bestWinStreak}
             playRound={playRound}
           />
         );

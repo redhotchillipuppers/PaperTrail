@@ -2,7 +2,7 @@ import React from 'react';
 import { ScrollView, View, Text } from 'react-native';
 import { Header } from '../shared/Header';
 import { PerformanceCard } from './PerformanceCard';
-import { WinRateCard } from '../game/WinStreakCard';
+import { WinRateCard } from './WinRateCard';
 import { OpponentPatternsCard } from './OpponentPatternsCard';
 import { ClearHistoryButton } from './ClearHistoryButton';
 

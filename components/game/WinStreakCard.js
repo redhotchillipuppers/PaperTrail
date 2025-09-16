@@ -26,7 +26,7 @@ export const WinStreakCard = ({ currentStreak, bestStreak }) => {
         <Text style={{
           fontSize: 24,
           fontWeight: '700',
-          color: currentStreak > 0 ? '#34C759' : '#8E8E93'
+          color: currentStreak > 0 ? '#007AFF' : '#8E8E93'
         }}>
           {currentStreak}
         </Text>
@@ -50,7 +50,7 @@ export const WinStreakCard = ({ currentStreak, bestStreak }) => {
         <Text style={{
           fontSize: 24,
           fontWeight: '700',
-          color: bestStreak > 0 ? '#FF9500' : '#8E8E93'
+          color: bestStreak > 0 ? '#007AFF' : '#8E8E93'
         }}>
           {bestStreak}
         </Text>
