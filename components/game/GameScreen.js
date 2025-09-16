@@ -4,6 +4,7 @@ import { Header } from '../shared/Header';
 import { OpponentCard } from './OpponentCard';
 import { PlayerCard } from './PlayerCard';
 import { PlayButton } from './PlayButton';
+import { WinStreakCard } from './WinStreakCard';
 
 export const GameScreen = ({ 
   selectedHim, 
@@ -11,6 +12,8 @@ export const GameScreen = ({
   selectedYou, 
   setSelectedYou, 
   roundCount, 
+  currentWinStreak,
+  bestWinStreak,
   playRound 
 }) => (
   <ScrollView style={{ flex: 1, backgroundColor: '#F2F2F7' }}>
@@ -31,6 +34,11 @@ export const GameScreen = ({
         selectedHim={selectedHim} 
         selectedYou={selectedYou} 
         playRound={playRound} 
+      />
+      
+      <WinStreakCard 
+        currentStreak={currentWinStreak}
+        bestStreak={bestWinStreak}
       />
     </View>
   </ScrollView>

@@ -7,6 +7,8 @@ export const useGameLogic = () => {
   const [selectedYou, setSelectedYou] = useState(null);
   const [gameData, setGameData] = useState([]);
   const [roundCount, setRoundCount] = useState(1);
+  const [currentWinStreak, setCurrentWinStreak] = useState(0);
+  const [bestWinStreak, setBestWinStreak] = useState(0);
 
   const playRound = () => {
     if (!selectedHim || !selectedYou) return;
@@ -24,6 +26,18 @@ export const useGameLogic = () => {
     setGameData(prev => [...prev, newGame]);
     setRoundCount(prev => prev + 1);
     
+    // Update win streak logic
+    if (outcome === 'win') {
+      const newStreak = currentWinStreak + 1;
+      setCurrentWinStreak(newStreak);
+      if (newStreak > bestWinStreak) {
+        setBestWinStreak(newStreak);
+      }
+    } else if (outcome === 'lose') {
+      setCurrentWinStreak(0);
+    }
+    // Note: ties don't break the streak but don't extend it either
+    
     // Reset for next round
     setSelectedHim(null);
     setSelectedYou(null);
@@ -32,6 +46,8 @@ export const useGameLogic = () => {
   const clearHistory = () => {
     setGameData([]);
     setRoundCount(1);
+    setCurrentWinStreak(0);
+    setBestWinStreak(0);
   };
 
   return {
@@ -43,6 +59,8 @@ export const useGameLogic = () => {
     setSelectedYou,
     gameData,
     roundCount,
+    currentWinStreak,
+    bestWinStreak,
     playRound,
     clearHistory
   };
