@@ -1,13 +1,15 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView } from 'react-native';
+import { ThemeProvider, useTheme } from './contexts/ThemeContext';
 import { useGameLogic } from './hooks/useGameLogic';
 import { GameScreen } from './components/game/GameScreen';
 import { AnalysisScreen } from './components/analysis/AnalysisScreen';
 import { SimulatorScreen } from './components/simulator/SimulatorScreen';
 import { TabBar } from './components/shared/TabBar';
 
-const PaperTrail = () => {
+const PaperTrailContent = () => {
+  const { theme } = useTheme();
   const gameLogic = useGameLogic();
   const {
     activeTab,
@@ -65,13 +67,21 @@ const PaperTrail = () => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#F2F2F7' }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: theme.background }}>
       <StatusBar style="auto" />
       
       {renderScreen()}
 
       <TabBar activeTab={activeTab} setActiveTab={setActiveTab} />
     </SafeAreaView>
+  );
+};
+
+const PaperTrail = () => {
+  return (
+    <ThemeProvider>
+      <PaperTrailContent />
+    </ThemeProvider>
   );
 };
 

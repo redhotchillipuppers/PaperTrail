@@ -1,7 +1,9 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
+import { useTheme } from '../../contexts/ThemeContext';
 
 export const TabBar = ({ activeTab, setActiveTab }) => {
+  const { theme } = useTheme();
   const tabs = [
     { id: 'game', label: 'Game', icon: '🎯' },
     { id: 'analysis', label: 'Analysis', icon: '📊' },
@@ -11,9 +13,9 @@ export const TabBar = ({ activeTab, setActiveTab }) => {
   return (
     <View style={{
       flexDirection: 'row',
-      backgroundColor: '#FFFFFF',
+      backgroundColor: theme.tabBarBackground,
       borderTopWidth: 1,
-      borderTopColor: '#E5E5EA'
+      borderTopColor: theme.tabBarBorder
     }}>
       {tabs.map(tab => (
         <TouchableOpacity
@@ -36,7 +38,7 @@ export const TabBar = ({ activeTab, setActiveTab }) => {
           <Text style={{
             fontSize: 10,
             fontWeight: '500',
-            color: activeTab === tab.id ? '#007AFF' : '#8E8E93'
+            color: activeTab === tab.id ? theme.accent : theme.secondaryText
           }}>
             {tab.label}
           </Text>
