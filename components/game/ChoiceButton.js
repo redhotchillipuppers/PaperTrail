@@ -1,13 +1,19 @@
 import React from 'react';
 import { TouchableOpacity, Text } from 'react-native';
+import * as Haptics from 'expo-haptics';
 import { useTheme } from '../../contexts/ThemeContext';
 
 export const ChoiceButton = ({ choice, isSelected, onSelect }) => {
   const { theme } = useTheme();
   
+  const handlePress = () => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    onSelect(choice.id);
+  };
+  
   return (
     <TouchableOpacity
-      onPress={() => onSelect(choice.id)}
+      onPress={handlePress}
       style={{
         width: 80,
         height: 80,

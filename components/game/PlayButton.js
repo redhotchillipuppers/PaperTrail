@@ -1,10 +1,32 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { TouchableOpacity, Text } from 'react-native';
+import * as Haptics from 'expo-haptics';
 import { useTheme } from '../../contexts/ThemeContext';
 
 export const PlayButton = ({ selectedHim, selectedYou, playRound, showingResult, lastGameResult }) => {
   const { theme } = useTheme();
   const isEnabled = selectedHim && selectedYou;
+  
+  // Trigger haptic feedback when result is shown
+  useEffect(() => {
+    if (showingResult && lastGameResult) {
+      const { outcome } = lastGameResult;
+      if (outcome === 'win') {
+        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+      } else if (outcome === 'lose') {
+        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+      } else {
+        Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
+      }
+    }
+  }, [showingResult, lastGameResult]);
+  
+  const handlePress = () => {
+    if (isEnabled && !showingResult) {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+      playRound();
+    }
+  };
   
   const getResultText = () => {
     if (!showingResult || !lastGameResult) return isEnabled ? 'Play Round' : 'Select Both Choices';
@@ -26,7 +48,7 @@ export const PlayButton = ({ selectedHim, selectedYou, playRound, showingResult,
 
   return (
     <TouchableOpacity
-      onPress={playRound}
+      onPress={handlePress}
       disabled={!isEnabled || showingResult}
       style={{
         height: 50,
