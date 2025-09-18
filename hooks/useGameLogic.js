@@ -92,10 +92,12 @@ export const useGameLogic = () => {
     setLastGameResult(newGame);
     setShowingResult(true);
 
+    setSelectedHim(null);
+    setSelectedYou(null);
+ 
+
     // Reset selections after 2 seconds
     setTimeout(() => {
-      setSelectedHim(null);
-      setSelectedYou(null);
       setShowingResult(false);
       setLastGameResult(null);
     }, 2000);
