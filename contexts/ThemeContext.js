@@ -33,7 +33,7 @@ export const darkTheme = {
   cardBorder: '#38383A',
   primaryText: '#FFFFFF',
   secondaryText: '#8E8E93',
-  accent: '#007AFF',
+  accent: '#ff0000ff',
   success: '#34C759',
   separator: '#38383A',
   tabBarBackground: '#1C1C1E',
